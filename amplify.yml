@@ -5,12 +5,15 @@ applications:
         build:
           commands:
             - npm ci
+            - export DATABASE_URL=${DATABASE_URL:-"file:/tmp/app.db"}
             - npx prisma generate
     frontend:
       phases:
         preBuild:
           commands:
             - npm ci
+            - export DATABASE_URL=${DATABASE_URL:-"file:/tmp/app.db"}
+            - export NODE_ENV=${NODE_ENV:-"production"}
             - npx prisma generate
         build:
           commands:

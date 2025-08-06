@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { PhotoUploadForm } from '@/components/PhotoUploadForm'
 
 export default function Home() {
@@ -51,12 +52,12 @@ export default function Home() {
         </div>
 
         <div className="text-center mt-6">
-          <a 
+          <Link 
             href="/admin"
             className="text-gray-400 text-xs hover:text-gray-600 transition-colors"
           >
             管理者ログイン
-          </a>
+          </Link>
         </div>
       </div>
     </div>

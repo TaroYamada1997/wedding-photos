@@ -1,0 +1,23 @@
+databases:
+  - name: wedding-photos-db
+    databaseName: wedding_photos
+    user: wedding_user
+
+services:
+  - type: web
+    name: wedding-photos-app
+    env: node
+    plan: free
+    buildCommand: |
+      npm ci
+      cp prisma/schema-production.prisma prisma/schema.prisma
+      npx prisma generate
+      npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: wedding-photos-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production

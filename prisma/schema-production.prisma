@@ -1,0 +1,30 @@
+// Production schema for PostgreSQL
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  nickname  String
+  filename  String
+  originalName String
+  mimeType  String
+  size      Int
+  imageData String   // Base64 encoded image data
+  createdAt DateTime @default(now())
+  
+  @@map("photos")
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  username String @unique
+  password String
+  
+  @@map("admins")
+}

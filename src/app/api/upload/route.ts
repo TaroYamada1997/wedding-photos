@@ -63,7 +63,11 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Upload error:', error)
     return NextResponse.json(
-      { error: 'アップロードに失敗しました' },
+      { 
+        error: 'アップロードに失敗しました',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : error) : undefined
+      },
       { status: 500 }
     )
   }

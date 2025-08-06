@@ -74,12 +74,14 @@ export function PhotoUploadForm({
           fileInputRef.current.value = ''
         }
       } else {
-        const error = await response.text()
-        throw new Error(error)
+        const errorData = await response.json()
+        console.error('Upload error details:', errorData)
+        throw new Error(errorData.details || errorData.error)
       }
     } catch (error) {
       console.error('Upload error:', error)
-      alert('アップロードに失敗しました。もう一度お試しください。')
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      alert(`アップロードに失敗しました: ${errorMessage}`)
       onUploadError()
     } finally {
       setIsUploading(false)

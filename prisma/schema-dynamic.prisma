@@ -1,12 +1,11 @@
-// Production schema for PostgreSQL
+// Dynamic schema that works with both SQLite and PostgreSQL
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Photo {
@@ -16,7 +15,7 @@ model Photo {
   originalName String
   mimeType  String
   size      Int
-  imageData String   @db.Text // Base64 encoded image data - use TEXT for large content
+  imageData String   // Base64 encoded image data
   createdAt DateTime @default(now())
   
   @@map("photos")

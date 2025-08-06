@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 結婚式写真アップロードアプリ
 
-## Getting Started
+結婚式のゲストが気軽に写真をアップロードでき、管理者がそれらを閲覧できるWebアプリケーションです。
 
-First, run the development server:
+## 機能
 
+### ゲスト機能
+- 📸 スマートフォンのカメラで写真を撮影してアップロード
+- ✍️ ニックネーム入力機能
+- 📱 スマートフォンに最適化されたレスポンシブデザイン
+- 🎉 結婚式にふさわしい美しいUI
+
+### 管理者機能
+- 👀 アップロードされた全ての写真をダッシュボードで閲覧
+- 🔍 写真の詳細情報（アップロード者、日時、ファイル情報）表示
+- 🖼️ 写真の拡大表示
+- 🔐 セキュアなログイン機能
+
+## セットアップ
+
+1. **依存関係のインストール:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **データベースの設定:**
+```bash
+npx prisma generate
+npx prisma db push
+npx tsx prisma/seed.ts
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **開発サーバーの起動:**
+```bash
+npm run dev
+# または
+./start.sh
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **アクセス:**
+- メインアプリ: http://localhost:3001
+- 管理画面: http://localhost:3001/admin
 
-## Learn More
+## 管理者ログイン情報
 
-To learn more about Next.js, take a look at the following resources:
+- **ユーザー名:** `admin`
+- **パスワード:** `admin123`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 技術スタック
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **フレームワーク:** Next.js 15 (App Router)
+- **データベース:** SQLite + Prisma ORM
+- **スタイリング:** Tailwind CSS
+- **ファイルアップロード:** Multer
+- **フォント:** Noto Sans JP (日本語対応)
+- **認証:** Cookie-based sessions
 
-## Deploy on Vercel
+## プロジェクト構造
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+├── app/
+│   ├── page.tsx              # メイン写真アップロードページ
+│   ├── admin/
+│   │   ├── page.tsx          # 管理者ログインページ
+│   │   └── dashboard/page.tsx # 管理者ダッシュボード
+│   └── api/
+│       ├── upload/route.ts    # 写真アップロードAPI
+│       └── admin/            # 管理者API
+├── components/
+│   └── PhotoUploadForm.tsx   # 写真アップロードフォーム
+└── lib/
+    └── prisma.ts            # Prisma クライアント設定
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 使用方法
+
+1. **ゲストの場合:**
+   - メインページにアクセス
+   - ニックネームを入力
+   - 「写真を選択」をタップして写真を選択またはカメラで撮影
+   - 「写真を送信」ボタンでアップロード
+
+2. **管理者の場合:**
+   - `/admin` にアクセス
+   - ログイン情報を入力してダッシュボードへ
+   - アップロードされた写真を閲覧・管理
+
+## デプロイメント
+
+本番環境にデプロイする場合：
+
+1. データベースの設定を本番用に変更
+2. 環境変数の設定
+3. セキュリティ設定の強化（JWT認証など）
+4. 画像最適化の設定
+
+## 注意事項
+
+- ファイルサイズ制限: 10MB
+- 対応形式: JPG, PNG, GIF
+- SQLiteを使用しているため、同時アクセス数に制限があります
+- 本番環境では PostgreSQL などの使用を推奨

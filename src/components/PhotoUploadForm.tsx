@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { API_ENDPOINTS } from '@/lib/config'
 
 interface PhotoUploadFormProps {
   onUploadStart: () => void
@@ -59,7 +60,7 @@ export function PhotoUploadForm({
     formData.append('nickname', nickname.trim())
 
     try {
-      const response = await fetch('/api/upload', {
+      const response = await fetch(API_ENDPOINTS.upload, {
         method: 'POST',
         body: formData,
       })

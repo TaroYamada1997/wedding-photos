@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { API_ENDPOINTS } from '@/lib/config'
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('')
@@ -17,7 +18,7 @@ export default function AdminLogin() {
     setError('')
 
     try {
-      const response = await fetch('/api/admin/login', {
+      const response = await fetch(API_ENDPOINTS.adminLogin, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

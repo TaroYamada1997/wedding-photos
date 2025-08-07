@@ -7,21 +7,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  output: 'export',
-  trailingSlash: true,
-  images: {
-    unoptimized: true,
-  },
-  // Exclude server-side code
+  // Standard Next.js for Vercel
   experimental: {
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/@aws-sdk/**/*',
-        'node_modules/@prisma/**/*',
-        'node_modules/@supabase/**/*',
-        'node_modules/prisma/**/*',
-      ],
-    },
+    serverComponentsExternalPackages: ['@aws-sdk/client-s3', '@prisma/client'],
   },
 }
 

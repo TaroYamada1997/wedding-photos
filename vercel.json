@@ -1,8 +1,10 @@
 {
   "functions": {
-    "app/api/upload/route.ts": {
+    "src/app/api/upload/route.ts": {
       "maxDuration": 30
     }
   },
-  "outputFileTracing": true
+  "env": {
+    "NEXT_PUBLIC_VERCEL": "1"
+  }
 }

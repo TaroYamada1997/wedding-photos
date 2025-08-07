@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { API_ENDPOINTS } from '@/lib/client-only'
 
 interface Photo {
   id: string
@@ -28,7 +27,7 @@ export default function AdminDashboard() {
 
   const fetchPhotos = async () => {
     try {
-      const response = await fetch(API_ENDPOINTS.adminPhotos)
+      const response = await fetch('/api/admin/photos')
       if (response.status === 401) {
         router.push('/admin')
         return
@@ -50,7 +49,7 @@ export default function AdminDashboard() {
 
   const handleLogout = async () => {
     try {
-      await fetch(API_ENDPOINTS.adminLogout, { method: 'POST' })
+      await fetch('/api/admin/logout', { method: 'POST' })
       router.push('/admin')
     } catch (err) {
       console.error('Logout error:', err)

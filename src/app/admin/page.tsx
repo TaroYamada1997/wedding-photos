@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { API_ENDPOINTS } from '@/lib/config'
+import { API_ENDPOINTS } from '@/lib/client-only'
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('')

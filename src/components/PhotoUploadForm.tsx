@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { API_ENDPOINTS } from '@/lib/config'
+import { API_ENDPOINTS } from '@/lib/client-only'
 
 interface PhotoUploadFormProps {
   onUploadStart: () => void

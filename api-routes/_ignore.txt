@@ -1,0 +1,2 @@
+# API routes are moved to separate Vercel deployment
+# This directory is ignored in static export

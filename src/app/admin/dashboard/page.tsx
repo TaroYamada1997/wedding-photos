@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { API_ENDPOINTS } from '@/lib/config'
+import { API_ENDPOINTS } from '@/lib/client-only'
 
 interface Photo {
   id: string

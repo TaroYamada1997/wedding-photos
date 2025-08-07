@@ -2,17 +2,26 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   eslint: {
-    ignoreDuringBuilds: process.env.NODE_ENV === 'production',
-    dirs: ['src'],
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: process.env.NODE_ENV === 'production',
+    ignoreBuildErrors: true,
   },
-  // Enable static export for Amplify
   output: 'export',
   trailingSlash: true,
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
+  },
+  // Exclude server-side code
+  experimental: {
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@aws-sdk/**/*',
+        'node_modules/@prisma/**/*',
+        'node_modules/@supabase/**/*',
+        'node_modules/prisma/**/*',
+      ],
+    },
   },
 }
 

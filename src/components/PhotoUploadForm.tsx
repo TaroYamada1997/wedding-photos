@@ -22,8 +22,8 @@ export function PhotoUploadForm({
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit for Vercel
-        alert('ファイルサイズが大きすぎます。5MB以下の写真を選択してください。')
+      if (file.size > 10 * 1024 * 1024) { // 10MB limit for S3
+        alert('ファイルサイズが大きすぎます。10MB以下の写真を選択してください。')
         return
       }
 
@@ -128,7 +128,7 @@ export function PhotoUploadForm({
                 タップして写真を選択
               </p>
               <p className="text-gray-400 text-xs mt-1">
-                JPG, PNG (最大5MB)
+                JPG, PNG (最大10MB)
               </p>
             </div>
           </div>

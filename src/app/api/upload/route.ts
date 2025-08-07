@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
+import { uploadToS3 } from '@/lib/s3'
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,23 +24,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate file size (5MB for Vercel)
-    if (file.size > 5 * 1024 * 1024) {
+    // Validate file size (10MB for S3)
+    if (file.size > 10 * 1024 * 1024) {
       return NextResponse.json(
-        { error: 'ファイルサイズが大きすぎます (最大5MB)' },
+        { error: 'ファイルサイズが大きすぎます (最大10MB)' },
         { status: 400 }
       )
     }
 
-    // Convert file to base64
+    // Convert file to buffer for S3 upload
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
-    const base64Data = buffer.toString('base64')
 
-    // Generate unique filename for reference
-    const filename = `${uuidv4()}.${file.type.split('/')[1]}`
+    // Generate unique filename
+    const fileExtension = file.name.split('.').pop() || 'jpg'
+    const filename = `${uuidv4()}.${fileExtension}`
 
-    // Save to database with base64 data
+    // Upload to S3
+    const imageUrl = await uploadToS3(buffer, filename, file.type)
+
+    // Save to Supabase database
     const photo = await prisma.photo.create({
       data: {
         nickname: nickname.trim(),
@@ -47,7 +51,7 @@ export async function POST(request: NextRequest) {
         originalName: file.name,
         mimeType: file.type,
         size: file.size,
-        imageData: base64Data,
+        imageUrl, // Store S3 URL instead of base64
       },
     })
 
@@ -57,6 +61,7 @@ export async function POST(request: NextRequest) {
         id: photo.id,
         nickname: photo.nickname,
         filename: photo.filename,
+        imageUrl: photo.imageUrl,
         createdAt: photo.createdAt,
       },
     })

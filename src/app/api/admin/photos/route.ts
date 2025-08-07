@@ -25,6 +25,7 @@ export async function GET(request: NextRequest) {
         originalName: true,
         mimeType: true,
         size: true,
+        imageUrl: true,
         createdAt: true,
       }
     })

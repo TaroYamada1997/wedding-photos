@@ -10,6 +10,7 @@ interface Photo {
   originalName: string
   mimeType: string
   size: number
+  imageUrl: string
   createdAt: string
 }
 
@@ -127,7 +128,7 @@ export default function AdminDashboard() {
               >
                 <div className="aspect-square">
                   <img
-                    src={`/api/image/${photo.id}`}
+                    src={photo.imageUrl}
                     alt={`Photo by ${photo.nickname}`}
                     className="w-full h-full object-cover"
                   />
@@ -178,7 +179,7 @@ export default function AdminDashboard() {
             
             <div className="p-6">
               <img
-                src={`/api/image/${selectedPhoto.id}`}
+                src={selectedPhoto.imageUrl}
                 alt={`Photo by ${selectedPhoto.nickname}`}
                 className="w-full h-auto max-h-[60vh] object-contain rounded-lg"
               />

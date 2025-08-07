@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
 import { uploadToS3 } from '@/lib/s3'
 
+// Use Node.js runtime for AWS SDK compatibility
+export const runtime = 'nodejs'
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()

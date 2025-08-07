@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
+// Use Node.js runtime for database compatibility
+export const runtime = 'nodejs'
+
 export async function GET() {
   try {
     // Try to create tables first (this will help with any schema issues)
